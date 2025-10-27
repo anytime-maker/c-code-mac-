@@ -5,17 +5,6 @@
 #include <termios.h>
 #include <fcntl.h>
 #include <stdarg.h>
-#include <stdarg.h>
-
-
-#ifdef TEST_ENV
-int getch(void) {
-    return getchar();
-}
-#endif
-
-void clrscr(void) {
-
 
 void clrscr(void) {
     printf("\033[2J\033[1;1H");
@@ -58,6 +47,16 @@ void textcolor(int color) {
 
 }
 
+/*
+ * --- 조건부 컴파일 ---
+ * TEST_ENV 신호가 있으면 (GitHub Actions), 간단한 getchar()를 getch()로 사용합니다.
+ * 그렇지 않으면 (실제 Mac/Linux 환경), termios.h를 사용하는 원래의 getch()를 사용합니다.
+ */
+#ifdef TEST_ENV
+int getch(void) {
+    return getchar();
+}
+#else
 int getch(void) {
     struct termios oldattr, newattr;
     int ch;
@@ -69,6 +68,8 @@ int getch(void) {
     tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
     return ch;
 }
+#endif
+
 
 void putch(char c) {
     putchar(c);
@@ -219,7 +220,7 @@ void make()
 
         case 'x'   : exit(0);
 
-		case 's'   : filesave(nowx,nowy);
+		case 's'   : filesave(nowx,nowY);
                      gotoxy(nowx,nowy);
                      break;
 
@@ -476,4 +477,3 @@ void prxy(int x,int y,char *msg)
     gotoxy(x,y);
 	cprintf("%s",msg);
 }
-
