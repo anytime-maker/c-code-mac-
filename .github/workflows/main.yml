@@ -1,11 +1,11 @@
-name: macOS C Compile Test
+name: macOS C Compile and Run Test
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build-on-macos:
+  build-and-run-on-macos:
     runs-on: macos-latest
 
     steps:
@@ -15,5 +15,18 @@ jobs:
       - name: Compile the C code with gcc
         run: gcc -o MAKEPIC2 MAKEPIC2.c
 
-      - name: Check if executable was created
-        run: ls -l
+      # 새로 추가된 부분: 컴파일된 프로그램을 샘플 입력과 함께 실행
+      - name: Run the program with sample inputs
+        run: |
+          ./MAKEPIC2 <<EOF
+          10
+          10
+          d
+          d
+          z
+          1
+          s
+          y
+          testfile
+          q
+          EOF
