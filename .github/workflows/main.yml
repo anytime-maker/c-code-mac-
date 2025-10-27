@@ -1,0 +1,19 @@
+name: macOS C Compile Test
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-on-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Compile the C code with gcc
+        run: gcc -o MAKEPIC2 MAKEPIC2.c
+
+      - name: Check if executable was created
+        run: ls -l
