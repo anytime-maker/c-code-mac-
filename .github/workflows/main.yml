@@ -12,10 +12,10 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Compile the C code with gcc
-        run: gcc -o MAKEPIC2 MAKEPIC2.c
+      # gcc 명령어에 -DTEST_ENV 를 추가!
+      - name: Compile the C code for testing
+        run: gcc -DTEST_ENV -o MAKEPIC2 MAKEPIC2.c
 
-      # 새로 추가된 부분: 컴파일된 프로그램을 샘플 입력과 함께 실행
       - name: Run the program with sample inputs
         run: |
           ./MAKEPIC2 <<EOF
