@@ -220,7 +220,7 @@ void make()
 
         case 'x'   : exit(0);
 
-		case 's'   : filesave(nowx,nowY);
+		case 's'   : filesave(nowx,nowy); // 'nowY' -> 'nowy'로 수정
                      gotoxy(nowx,nowy);
                      break;
 
@@ -477,3 +477,4 @@ void prxy(int x,int y,char *msg)
     gotoxy(x,y);
 	cprintf("%s",msg);
 }
+
