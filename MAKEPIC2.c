@@ -5,6 +5,17 @@
 #include <termios.h>
 #include <fcntl.h>
 #include <stdarg.h>
+#include <stdarg.h>
+
+
+#ifdef TEST_ENV
+int getch(void) {
+    return getchar();
+}
+#endif
+
+void clrscr(void) {
+
 
 void clrscr(void) {
     printf("\033[2J\033[1;1H");
@@ -465,3 +476,4 @@ void prxy(int x,int y,char *msg)
     gotoxy(x,y);
 	cprintf("%s",msg);
 }
+
